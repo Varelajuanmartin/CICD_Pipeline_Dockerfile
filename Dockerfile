@@ -21,12 +21,20 @@ RUN curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s
 RUN chmod +x ./kubectl
 RUN mv ./kubectl /usr/local/bin
 
+# INSTALL AWS CLI
+
+RUN apt-get install unzip && \
+   curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && \
+   unzip awscliv2.zip && \
+   ./aws/install
+
 # INSTALL ANSIBLE
 
 RUN apt-get update && \
    apt-get install -y gcc python-dev && \
    apt-get install python3-pip -y && \
    pip3 install --upgrade pip && \
-   pip3 install ansible
+   pip3 install ansible && \
+   pip3 install Kubernetes
 
 USER jenkins
